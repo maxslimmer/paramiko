@@ -368,8 +368,11 @@ class Agent(AgentSSH):
                 return
         elif sys.platform == "win32":
             from . import win_pageant
+            from . import win_ssh_agent
+            if win_ssh_agent.can_talk_to_agent():
+                conn = win_ssh_agent.SSHAgentConnection()
 
-            if win_pageant.can_talk_to_agent():
+            elif win_pageant.can_talk_to_agent():
                 conn = win_pageant.PageantConnection()
             else:
                 return
